@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /tables:
+    get:
+      operationId: getTables
+      tags:
+        - Tables
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/table"
+          description: Tables has been retrieved successfully
+    post:
+      operationId: createTable
+      tags:
+        - Tables
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/table"
+      responses:
+        201:
+          $ref: "#/components/responses/201"
+  /tables/{tableId}:
+    get:
+      operationId: getTable
+      tags:
+        - Tables
+      parameters:
+        - name: tableId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      responses:
+        200:
+          description: Table has been retrieved successfully
+    put:
+      operationId: updateTable
+      tags:
+        - Tables
+      parameters:
+        - name: tableId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/table"
+      responses:
+        200:
+          description: Table has been updated successfully
+    delete:
+      operationId: deleteTable
+      tags:
+        - Tables
+      parameters:
+        - name: tableId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      responses:
+        200:
+          description: Tables has been deleted successfully
+components:
+  schemas:
+    table:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        seatCount:
+          type: integer
+        active:
+          type: boolean
+    id:
+      type: integer
+      format: int64
+  responses:
+    201:
+      description: Data has been created successfully

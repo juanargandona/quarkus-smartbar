@@ -1,20 +1,24 @@
 package pe.jargandc.smartbar.backoffice.tables;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.smallrye.common.constraint.NotNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.Setter;
+import pe.jargandc.smartbar.backoffice.BaseEntity;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "tables", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
-public class TableEntity extends PanacheEntity {
+public class TableEntity extends BaseEntity {
     @NotNull
-    public String name;
+    private String name;
 
     @NotNull
-    public Integer seatCount;
+    private Integer seatCount;
 
     @NotNull
-    public Boolean active;
+    private Boolean active;
 }

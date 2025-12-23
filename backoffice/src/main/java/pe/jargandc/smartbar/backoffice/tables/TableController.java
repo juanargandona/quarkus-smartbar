@@ -1,6 +1,5 @@
 package pe.jargandc.smartbar.backoffice.tables;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
@@ -15,10 +14,12 @@ import java.util.Optional;
 public class TableController implements TablesApi {
 
     private final TableMapper mapper;
+    private final TableRepository repository;
 
     @Inject
-    public TableController(TableMapper mapper) {
+    public TableController(TableMapper mapper, TableRepository repository) {
         this.mapper = mapper;
+        this.repository = repository;
     }
 
     @Override
@@ -26,23 +27,23 @@ public class TableController implements TablesApi {
     public Response createTable(Table table) {
         TableEntity entity = new TableEntity();
         mapper.mapToEntity(table,entity);
-        entity.persist();
+        repository.persist(entity);
         return Response.created(URI.create("./tables/"+entity.id)).build();
     }
 
     @Override
     public Response deleteTable(Long tableId) {
-        Optional<TableEntity> optional = TableEntity.findByIdOptional(tableId);
+        Optional<TableEntity> optional = repository.findByIdOptional(tableId);
         if(optional.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        optional.get().delete();
+        repository.delete(optional.get());
         return Response.ok().build();
     }
 
     @Override
     public Response getTable(Long tableId) {
-        Optional<TableEntity> optional = TableEntity.findByIdOptional(tableId);
+        Optional<TableEntity> optional = repository.findByIdOptional(tableId);
         if(optional.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -51,13 +52,13 @@ public class TableController implements TablesApi {
 
     @Override
     public Response getTables() {
-        final List<TableEntity> entityList = TableEntity.listAll();
+        final List<TableEntity> entityList = repository.listAll();
         return Response.ok(entityList.stream().map(mapper::mapToTable)).build();
     }
 
     @Override
     public Response updateTable(Long tableId, Table table) {
-        Optional<TableEntity> optional = TableEntity.findByIdOptional(tableId);
+        Optional<TableEntity> optional = repository.findByIdOptional(tableId);
         if(optional.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

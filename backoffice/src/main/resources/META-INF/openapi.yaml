@@ -77,6 +77,155 @@ paths:
       responses:
         200:
           description: Tables has been deleted successfully
+  /categories:
+    get:
+      operationId: getCategories
+      tags:
+        - Categories
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/category"
+          description: Categories have been retrieved successfully
+    post:
+      operationId: createCategory
+      tags:
+        - Categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/category"
+      responses:
+        201:
+          $ref: "#/components/responses/201"
+  /categories/{categoryId}:
+    get:
+      operationId: getCategory
+      tags:
+        - Categories
+      parameters:
+        - name: categoryId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      responses:
+        200:
+          description: Category has been retrieved successfully
+    put:
+      operationId: updateCategory
+      tags:
+        - Categories
+      parameters:
+        - name: categoryId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/category"
+      responses:
+        200:
+          description: Category has been updated successfully
+    delete:
+      operationId: deleteCategory
+      tags:
+        - Categories
+      parameters:
+        - name: categoryId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      responses:
+        200:
+          description: Category has been deleted successfully
+  /articles:
+    get:
+      operationId: getArticles
+      tags:
+        - Articles
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/article"
+          description: Articles have been retrieved successfully
+    post:
+      operationId: createArticle
+      tags:
+        - Articles
+      parameters:
+        - name: x-category-id
+          in: header
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/article"
+      responses:
+        201:
+          $ref: "#/components/responses/201"
+  /articles/{articleId}:
+    get:
+      operationId: getArticle
+      tags:
+        - Articles
+      parameters:
+        - name: articleId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      responses:
+        200:
+          description: Article has been retrieved successfully
+    put:
+      operationId: updateArticle
+      tags:
+        - Articles
+      parameters:
+        - name: articleId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/article"
+      responses:
+        200:
+          description: Article has been updated successfully
+    delete:
+      operationId: deleteArticle
+      tags:
+        - Articles
+      parameters:
+        - name: articleId
+          in: path
+          schema:
+            $ref: "#/components/schemas/id"
+          required: true
+      responses:
+        200:
+          description: Article has been deleted successfully
 components:
   schemas:
     table:
@@ -91,6 +240,30 @@ components:
           type: integer
         active:
           type: boolean
+    category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+    article:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        picture:
+          type: string
     id:
       type: integer
       format: int64

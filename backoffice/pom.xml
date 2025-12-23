@@ -98,18 +98,6 @@
             <version>5.4.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-panache-mock</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version> <!-- Use the latest version from Maven Central -->
-            <scope>provided</scope>
-        </dependency>
-
     </dependencies>
 
     <build>

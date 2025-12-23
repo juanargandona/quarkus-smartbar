@@ -42,7 +42,7 @@ public class ArticleController implements ArticlesApi {
 
     @Override
     public Response getArticles() {
-        return null;
+        return Response.ok(articleRepository.listAll()).build();
     }
 
     @Override

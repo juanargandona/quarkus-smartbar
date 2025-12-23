@@ -10,6 +10,11 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "articles", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
+@NamedQueries(
+        {
+                @NamedQuery(name = "Article.byCategory", query = "from ArticleEntity where category = ?1 order by price desc")
+        }
+)
 public class ArticleEntity extends PanacheEntity {
     @NotNull
     public String name;

@@ -11,24 +11,8 @@ import pe.jargandc.smartbar.backoffice.BaseEntity;
 @Table(name = "categories", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class CategoryEntity extends BaseEntity {
     @NotNull
-    private String name;
+    public String name;
 
     @NotNull
-    private String description;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public String description;
 }

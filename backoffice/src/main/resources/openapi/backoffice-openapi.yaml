@@ -1,0 +1,206 @@
+openapi: 3.1.0
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /articles:
+    get:
+      operationId: getArticles
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/article"
+          description: Get all articles
+    post:
+      operationId: createArticle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/article"
+      responses:
+        201:
+          $ref: "#/components/responses/201"
+  /articles/{articleId}:
+    parameters:
+      - name: articleId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/id"
+    put:
+      operationId: updateArticle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/article"
+      responses:
+        200:
+          $ref: "#/components/responses/updated"
+    delete:
+      operationId: deleteArticle
+      responses:
+        200:
+          $ref: "#/components/responses/deleted"
+    get:
+      operationId: getArticle
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/article"
+          description: Entity retrieved successfully
+  /categories:
+    get:
+      operationId: getCategories
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/category"
+          description: Get all categories
+    post:
+      operationId: createCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/category"
+      responses:
+        201:
+          $ref: "#/components/responses/201"
+  /categories/{categoryId}:
+    parameters:
+      - name: categoryId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/id"
+    put:
+      operationId: updateCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/category"
+      responses:
+        200:
+          $ref: "#/components/responses/updated"
+    delete:
+      operationId: deleteCategory
+      responses:
+        200:
+          $ref: "#/components/responses/deleted"
+    get:
+      operationId: getCategory
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/category"
+          description: Entity retrieved successfully
+  /tables:
+    get:
+      operationId: getTables
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/table"
+          description: Get all tables
+    post:
+      operationId: createTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/table"
+      responses:
+        201:
+          $ref: "#/components/responses/201"
+  /tables/{tableId}:
+    parameters:
+      - name: tableId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/id"
+    put:
+      operationId: updateTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/table"
+      responses:
+        200:
+          $ref: "#/components/responses/updated"
+    delete:
+      operationId: deleteTable
+      responses:
+        200:
+          $ref: "#/components/responses/deleted"
+    get:
+      operationId: getTable
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/category"
+          description: Entity retrieved successfully
+
+components:
+  schemas:
+    article:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        picture:
+          type: string
+    category:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    table:
+      type: object
+      properties:
+        name:
+          type: string
+        seatCount:
+          type: number
+        active:
+          type: boolean
+    id:
+      type: string
+  responses:
+    updated:
+      description: Entity updated successfully
+    deleted:
+      description: Entity deleted successfully
+    201:
+      description: Entity created successfully

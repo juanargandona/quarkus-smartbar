@@ -1,11 +1,11 @@
-package org.jargc.articles;
+package org.jargc;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
-@Provider
+//@Provider
 public class SmartbarExceptionMapper implements ExceptionMapper<Exception> {
 
     @Override

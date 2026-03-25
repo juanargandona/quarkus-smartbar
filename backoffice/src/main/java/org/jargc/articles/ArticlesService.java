@@ -1,13 +1,22 @@
 package org.jargc.articles;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.jargc.smartbar.backoffice.api.model.Article;
+import jakarta.persistence.EntityManager;
+import org.jargc.CrudService;
+import org.jargc.smartbar.backoffice.api.model.ApiArticle;
 
 @ApplicationScoped
-public class ArticlesService {
-    private final Article article = new Article().name("cola");
+public class ArticlesService extends CrudService<Article> {
+    public ArticlesService() {
+        super(null);
+    }
 
-    public Article getArticle(){
-        return article;
+    protected ArticlesService(EntityManager entityManager) {
+        super(entityManager);
+    }
+
+    @Override
+    protected Class<Article> getEntityClass() {
+        return Article.class;
     }
 }

@@ -2,45 +2,61 @@ package org.jargc.articles;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
+import org.jargc.categories.CategoriesService;
+import org.jargc.categories.Category;
 import org.jargc.smartbar.backoffice.api.ArticlesApi;
-import org.jargc.smartbar.backoffice.api.model.Article;
+import org.jargc.smartbar.backoffice.api.model.ApiArticle;
 
-import java.util.List;
+import java.net.URI;
+import java.util.Optional;
 
 public class ArticlesResource implements ArticlesApi {
 
-    private final Article article = new Article().name("Chardonnay");
-
+    private final CategoriesService categoriesService;
     private final ArticlesService articlesService;
 
     @Inject
-    public ArticlesResource(ArticlesService articlesService) {
+    public ArticlesResource(CategoriesService categoriesService, ArticlesService articlesService) {
+        this.categoriesService = categoriesService;
         this.articlesService = articlesService;
     }
 
 
     @Override
-    public Response createArticle(Article article) {
+    public Response createArticle(Long xCategoryId, ApiArticle apiArticle) {
+        final Optional<Category> category = categoriesService.getById(xCategoryId);
+        if(category.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        final Article article = new Article();
+        article.setName(apiArticle.getName());
+        article.setDescription(apiArticle.getDescription());
+        article.setPrice(apiArticle.getPrice());
+        article.setPicture(apiArticle.getPicture());
+
+        final Article persistedArticle = articlesService.persist(article);
+        return Response.created(URI.create("/articles/"+persistedArticle.getId())).build();
+    }
+
+
+
+    @Override
+    public Response deleteArticle(Long articleId) {
         return null;
     }
 
     @Override
-    public Response deleteArticle(String articleId) {
+    public Response getArticle(Long articleId) {
         return null;
-    }
-
-    @Override
-    public Response getArticle(String articleId) {
-        return Response.ok(articlesService.getArticle()).build();
     }
 
     @Override
     public Response getArticles() {
-        return Response.ok(List.of(articlesService.getArticle())).build();
+        return null;
     }
 
     @Override
-    public Response updateArticle(String articleId, Article article) {
+    public Response updateArticle(Long articleId, ApiArticle apiArticle) {
         return null;
     }
 }

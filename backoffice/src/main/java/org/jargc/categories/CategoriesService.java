@@ -1,14 +1,24 @@
 package org.jargc.categories;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.jargc.smartbar.backoffice.api.model.Article;
-import org.jargc.smartbar.backoffice.api.model.Category;
+import jakarta.persistence.EntityManager;
+import org.jargc.CrudService;
+import org.jargc.smartbar.backoffice.api.model.ApiCategory;
 
 @ApplicationScoped
-public class CategoriesService {
-    private final Category category = new Category().name("drinks");
+public class CategoriesService extends CrudService<Category> {
+    private final ApiCategory category = new ApiCategory().name("drinks");
 
-    public Category getCategory(){
-        return category;
+    public CategoriesService() {
+        super(null);
+    }
+
+    protected CategoriesService(EntityManager entityManager) {
+        super(entityManager);
+    }
+
+    @Override
+    protected Class<Category> getEntityClass() {
+        return Category.class;
     }
 }

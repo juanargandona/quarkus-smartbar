@@ -16,15 +16,22 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/article"
+                  $ref: "#/components/schemas/apiArticle"
           description: Get all articles
     post:
       operationId: createArticle
+      parameters:
+        - name: x-category-id
+          in: header
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/article"
+              $ref: "#/components/schemas/apiArticle"
       responses:
         201:
           $ref: "#/components/responses/201"
@@ -41,7 +48,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/article"
+              $ref: "#/components/schemas/apiArticle"
       responses:
         200:
           $ref: "#/components/responses/updated"
@@ -57,7 +64,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/article"
+                $ref: "#/components/schemas/apiArticle"
           description: Entity retrieved successfully
   /categories:
     get:
@@ -69,7 +76,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/category"
+                  $ref: "#/components/schemas/apiCategory"
           description: Get all categories
     post:
       operationId: createCategory
@@ -77,7 +84,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/category"
+              $ref: "#/components/schemas/apiCategory"
       responses:
         201:
           $ref: "#/components/responses/201"
@@ -94,7 +101,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/category"
+              $ref: "#/components/schemas/apiCategory"
       responses:
         200:
           $ref: "#/components/responses/updated"
@@ -110,7 +117,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/category"
+                $ref: "#/components/schemas/apiCategory"
           description: Entity retrieved successfully
   /tables:
     get:
@@ -122,7 +129,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/table"
+                  $ref: "#/components/schemas/apiTable"
           description: Get all tables
     post:
       operationId: createTable
@@ -130,7 +137,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/table"
+              $ref: "#/components/schemas/apiTable"
       responses:
         201:
           $ref: "#/components/responses/201"
@@ -147,7 +154,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/table"
+              $ref: "#/components/schemas/apiTable"
       responses:
         200:
           $ref: "#/components/responses/updated"
@@ -163,12 +170,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/category"
+                $ref: "#/components/schemas/apiCategory"
           description: Entity retrieved successfully
 
 components:
   schemas:
-    article:
+    apiArticle:
       type: object
       properties:
         name:
@@ -179,24 +186,29 @@ components:
           type: string
         picture:
           type: string
-    category:
+    apiCategory:
       type: object
       properties:
         name:
           type: string
         description:
           type: string
-    table:
+    apiTable:
       type: object
+      required:
+        - name
+        - seatCount
+        - active
       properties:
         name:
           type: string
         seatCount:
-          type: number
+          type: integer
         active:
           type: boolean
     id:
-      type: string
+      type: integer
+      format: int64
   responses:
     updated:
       description: Entity updated successfully

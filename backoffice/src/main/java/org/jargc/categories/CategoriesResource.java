@@ -3,42 +3,41 @@ package org.jargc.categories;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.jargc.smartbar.backoffice.api.CategoriesApi;
-import org.jargc.smartbar.backoffice.api.model.Category;
+import org.jargc.smartbar.backoffice.api.model.ApiCategory;
 
 import java.util.List;
 
 public class CategoriesResource implements CategoriesApi {
 
-    //private final Category category = new Category().name("drinks");
-    @Inject
     private final CategoriesService categoriesService;
 
+    @Inject
     public CategoriesResource(CategoriesService categoriesService) {
         this.categoriesService = categoriesService;
     }
 
     @Override
-    public Response createCategory(Category category) {
+    public Response createCategory(ApiCategory apiCategory) {
         return null;
     }
 
     @Override
-    public Response deleteCategory(String categoryId) {
+    public Response deleteCategory(Long categoryId) {
         return null;
     }
 
     @Override
     public Response getCategories() {
-        return Response.ok(List.of(categoriesService.getCategory())).build();
+        return Response.ok(categoriesService.getAll()).build();
     }
 
     @Override
-    public Response getCategory(String categoryId) {
+    public Response getCategory(Long categoryId) {
         return null;
     }
 
     @Override
-    public Response updateCategory(String categoryId, Category category) {
+    public Response updateCategory(Long categoryId, ApiCategory apiCategory) {
         return null;
     }
 }

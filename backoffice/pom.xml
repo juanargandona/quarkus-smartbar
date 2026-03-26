@@ -165,7 +165,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/openapi/backoffice-openapi.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/META-INF/openapi.yaml</inputSpec>
                             <generatorName>jaxrs-spec</generatorName>
                             <apiPackage>org.jargc.smartbar.backoffice.api</apiPackage>
                             <modelPackage>org.jargc.smartbar.backoffice.api.model</modelPackage>

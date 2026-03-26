@@ -170,7 +170,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/apiCategory"
+                $ref: "#/components/schemas/apiTable"
           description: Entity retrieved successfully
 
 components:

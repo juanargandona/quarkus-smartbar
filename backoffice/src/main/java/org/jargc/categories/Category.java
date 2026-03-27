@@ -10,9 +10,7 @@ import java.math.BigDecimal;
 @jakarta.persistence.Table(name = "categories")
 public class Category extends BaseEntity {
     private String name;
-
-    @ManyToOne
-    private Category category;
+    private String description;
 
     public String getName() {
         return name;
@@ -22,5 +20,11 @@ public class Category extends BaseEntity {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

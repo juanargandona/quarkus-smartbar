@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import org.jargc.BaseEntity;
 
 @Entity
-@jakarta.persistence.Table(name = "Sbo_table", uniqueConstraints = {
+@jakarta.persistence.Table(name = "tables", uniqueConstraints = {
         @UniqueConstraint(columnNames = "name")
 })
 public class Table extends BaseEntity {

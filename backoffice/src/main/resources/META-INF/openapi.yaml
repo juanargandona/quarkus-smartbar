@@ -177,7 +177,15 @@ components:
   schemas:
     apiArticle:
       type: object
+      required:
+        - name
+        - price
+        - picture
+        - description
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
         price:
@@ -188,7 +196,13 @@ components:
           type: string
     apiCategory:
       type: object
+      required:
+        - name
+        - description
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
         description:

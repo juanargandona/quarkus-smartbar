@@ -1,15 +1,21 @@
 package org.jargc.articles;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import org.jargc.BaseEntity;
 import org.jargc.categories.Category;
 
 import java.math.BigDecimal;
 
 @Entity
-@jakarta.persistence.Table(name = "articles")
+@jakarta.persistence.Table(name = "articles", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "name", "category_id"
+        })
+})
+@NamedQueries({
+        @NamedQuery(name = "Article.byCategory", query = "from Article where category =?1" +
+                "order by price asc")
+})
 public class Article extends BaseEntity {
     private String name;
     private BigDecimal price;

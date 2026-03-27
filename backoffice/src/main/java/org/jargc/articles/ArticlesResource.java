@@ -6,6 +6,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
+import org.jargc.categories.CategoriesRepository;
 import org.jargc.categories.CategoriesService;
 import org.jargc.categories.Category;
 import org.jargc.smartbar.backoffice.api.ArticlesApi;
@@ -19,22 +20,18 @@ public class ArticlesResource implements ArticlesApi {
 
     private final ArticleMapper mapper;
     private final ArticlesRepository articlesRepository;
-    private final CategoriesService categoriesService;
+    private final CategoriesRepository categoriesRepository;
 
     @Inject
-    public ArticlesResource(ArticleMapper mapper, ArticlesRepository articlesRepository, CategoriesService categoriesService) {
+    public ArticlesResource(ArticleMapper mapper, ArticlesRepository articlesRepository, CategoriesService categoriesService, CategoriesRepository categoriesRepository) {
         this.mapper = mapper;
         this.articlesRepository = articlesRepository;
-        this.categoriesService = categoriesService;
+        this.categoriesRepository = categoriesRepository;
     }
 
-
-
-
-
-    //@Override
-    public void createArticle2(Long xCategoryId, ApiArticle apiArticle) {
-        /*final Optional<Category> category = categoriesService.getById(xCategoryId);
+    @Override
+    public Response createArticle(Long xCategoryId, ApiArticle apiArticle) {
+        final Optional<Category> category = categoriesRepository.findByIdOptional(xCategoryId);
         if(category.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -43,17 +40,9 @@ public class ArticlesResource implements ArticlesApi {
         article.setCategory(category.get());
         articlesRepository.persist(article);
 
-
         return Response.created(URI.create("/articles/"+article.getId())).build();
-        */
-
     }
 
-
-    @Override
-    public Response createArticle(Long xCategoryId, ApiArticle apiArticle) {
-        return null;
-    }
 
     @Override
     public Response deleteArticle(Long articleId) {
@@ -67,7 +56,8 @@ public class ArticlesResource implements ArticlesApi {
 
     @Override
     public Response getArticles() {
-        return null;
+        List<Article> articles = articlesRepository.listAll();
+        return Response.ok(articles.stream().map(mapper::mapToApiArticle)).build();
     }
 
     @Override
@@ -76,10 +66,10 @@ public class ArticlesResource implements ArticlesApi {
     }
 
     @GET
-    @Path("/categories/{categoryId}")
+    @Path("/category/{categoryId}")
     @Produces({"application/json"})
     public Response listByCategory(@PathParam("categoryId") Long categoryId){
-        final Optional<Category> category = categoriesService.getById(categoryId);
+        final Optional<Category> category = categoriesRepository.findByIdOptional(categoryId);
         if(category.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
